@@ -70,7 +70,7 @@ ALLOWED_HOSTS = ["127.0.0.1", "52.56.250.176"]
 # Application definition
 
 INSTALLED_APPS = [
-    "todo",
+    "todonow",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
