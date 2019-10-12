@@ -1,0 +1,22 @@
+{% extends "admin/base_site.html" %} {% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+    <p>
+        Are you sure you want to execute this action on the selected items?
+    </p>
+    {% for user in users %}
+    <p>
+        * {{ user.title }}
+        {{ user.description }}
+    </p>
+    <input type="hidden" name="_selected_action" value="{{ user.pk }}" />
+    {% endfor %}
+    <textarea id="your_message" name="your_message"></textarea>
+    <p>
+        <input type="hidden" name="action" value="send_out_push" />
+        <input type="submit" name="apply" value="Update status" />
+    </p>
+</form>
+<form action="" method="post">
+    {% endblock %}
+</form>
