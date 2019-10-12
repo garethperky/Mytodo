@@ -71,6 +71,7 @@ ALLOWED_HOSTS = ["127.0.0.1", "52.56.250.176"]
 
 INSTALLED_APPS = [
     "todonow",
+    'bootstrap4',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
