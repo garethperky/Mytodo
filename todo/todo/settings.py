@@ -65,7 +65,7 @@ SECRET_KEY = _SECRET["SECRET_KEY"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "52.56.250.176"]
+ALLOWED_HOSTS = ["127.0.0.1", "3.8.174.79"]
 
 
 # Application definition
