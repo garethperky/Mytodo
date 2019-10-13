@@ -1,8 +1,14 @@
 {% extends 'base.html' %} {% block title %}Home{% endblock %} {% block content %}
 <p></p>
 {% if user.is_authenticated %}
+{% if user.userprofile.image %}
+    <img src="{{ user.userprofile.image.url }}" width="240">
+{% endif %}
+
 <h2>Hello {{ user.username }} these are your tasks :</h2>
 <br />
+<br />
+
 <table class="table table-hover">
     <thead>
         <tr>
@@ -31,4 +37,5 @@
 {% else %}
 <p>You are not logged in</p>
 <a href="{% url 'login' %}">login</a>
-{% endif %} {% endblock %}
+{% endif %}
+{% endblock %}
