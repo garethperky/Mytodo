@@ -1,3 +1,4 @@
+{% load static %}
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -10,6 +11,11 @@
             href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
             integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
             crossorigin="anonymous"
+        />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{% static 'todonow/css/todo.css' %}"
         />
         <link
             rel="stylesheet"
@@ -34,30 +40,21 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#"
-                        >Home <span class="sr-only">(current)</span></a
-                    >
-                </li>
-            </ul>
+            {% if user.is_authenticated %}
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a
-                        class="nav-link"
-                        href="{% url 'logout' %}"
-                        data-target="#myModal"
-                        data-toggle="modal"
-                        >Log Out</a
-                    >
+                    <button type="button" class="btn btn-light">
+                        <a href="{% url 'logout' %}">Log Out</a>
+                    </button>
                 </li>
             </ul>
+            {% endif %}
         </div>
     </nav>
     <body>
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-4">
+                <div class="col-6">
                     <h1 class="mt-2"></h1>
                     <hr class="mt-0 mb-4" />
                     {% block content %} {% endblock %}

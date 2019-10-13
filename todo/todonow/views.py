@@ -4,12 +4,23 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .models import Todo
 from django.contrib.auth.models import User
+import math
 
+def sum_total_values(user):
+    values = Todo.objects.filter(
+        user=user
+    ).filter(completed = True)
+    total_values = sum([entry.value for entry in values]) / 100
+    return total_values
 
 @login_required
 def index(request):
     todo = Todo.objects.filter(user=request.user)
-    return render(request, 'home.html', context={'todo_entries': todo})
+    net_value = sum_total_values(request.user)
+    percentage = round(net_value * 100)
+    if percentage > 100:
+        percentage = 100
+    return render(request, 'home.html', context={'todo_entries': todo, "percentage": percentage})
 
 @login_required
 def profile(request):

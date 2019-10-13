@@ -1,13 +1,24 @@
-{% extends 'base.html' %} {% block title %}Home{% endblock %} {% block content %}
-<p></p>
+{% extends 'base.html' %} {% load static %} {% block title %}Home{% endblock %} {% block content %}
 {% if user.is_authenticated %}
-{% if user.userprofile.image %}
-    <img src="{{ user.userprofile.image.url }}" width="240">
-{% endif %}
 
-<h2>Hello {{ user.username }} these are your tasks :</h2>
+{% if user.userprofile.image %}
+<div class="text-center">
+
+<img class="circular--square" src="{{ user.userprofile.image.url }}" width="240">
+
+</div>
+
+{% endif %}
 <br />
 <br />
+<h3>Hello {{ user.first_name }} you have completed {{ percentage }}% of your weekly tasks</h3>
+<br />
+
+<div class="progress" style="margin-bottom: 2em;">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+          aria-valuenow="{{percentage}}" aria-valuemin="0" aria-valuemax="100" style="width:{{percentage}}%">
+        </div>
+      </div>
 
 <table class="table table-hover">
     <thead>
@@ -25,10 +36,11 @@
             <th scope="row">{{ entry.id }}</th>
             <td>{{ entry.title }}</td>
             <td>{{ entry.description }}</td>
-            <td>
-                {{ entry.completed }}
-            </td>
-            <td><button type="button" class="btn btn-danger">Delete</button></td>
+            {% if entry.completed %}<td><button type="button" class="btn btn-success">Completed</button></td>
+            {% else %}
+            <td><button type="button" class="btn btn-danger">Complete</button></td>
+            {% endif %}
+            <td class="align-middle"><a class="btn btn-danger delete" href="" data-confirm="Are you sure you want to delete this log entry? Once deleted, it cannot be recovered."><i class="fal fa-trash-alt"></i></a></td>
         </tr>
         {% endfor %}
     </tbody>
