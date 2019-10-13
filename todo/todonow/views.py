@@ -9,7 +9,6 @@ from django.contrib.auth.models import User
 @login_required
 def index(request):
     todo = Todo.objects.filter(user=request.user)
-    print("hello")
     return render(request, 'home.html', context={'todo_entries': todo})
 
 @login_required
