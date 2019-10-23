@@ -4,7 +4,7 @@
 {% if user.userprofile.image %}
 <div class="text-center">
 
-<img class="circular--square" src="{{ user.userprofile.image.url }}" width="240">
+<img class="circular--square" src="{{ user.userprofile.image.url }}" width="250">
 
 </div>
 
@@ -23,29 +23,28 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th scope="col">#</th>
             <th scope="col">Title</th>
             <th scope="col">Description</th>
             <th scope="col">Completed</th>
+            {% if request.user.is_staff %}
             <th scope="col">delete</th></th>
+            {% endif %}
         </tr>
     </thead>
     <tbody>
         {% for entry in todo_entries %}
         <tr table-primary>
-            <th scope="row">{{ entry.id }}</th>
             <td>{{ entry.title }}</td>
             <td>{{ entry.description }}</td>
             {% if entry.completed %}<td><button type="button" class="btn btn-success">Completed</button></td>
             {% else %}
-            <td><button type="button" class="btn btn-danger">Complete</button></td>
+            <td><form><button type="submit" name="complete" class="btn btn-danger" method="post">Complete</button></form></td>
             {% endif %}
-            <td class="align-middle"><a class="btn btn-danger delete" href="" data-confirm="Are you sure you want to delete this log entry? Once deleted, it cannot be recovered."><i class="fal fa-trash-alt"></i></a></td>
+            <td class="align-middle"><a class="btn btn-danger delete" href=""><i class="fal fa-trash-alt"></i></a></td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-<p><a href="{% url 'logout' %}">logout</a></p>
 {% else %}
 <p>You are not logged in</p>
 <a href="{% url 'login' %}">login</a>
