@@ -1,6 +1,11 @@
 {% load static %}
 <html lang="en">
     <head>
+        <style>
+            img {
+                border-radius: 50%;
+            }
+        </style>
         <meta charset="utf-8" />
         <meta
             name="viewport"
@@ -27,18 +32,18 @@
     </head>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <a class="navbar-brand" href="#">The Todo</a>
-        <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-        >
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            {% if request.user.is_staff %}
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#"
+                        >Admin <span class="sr-only">(current)</span></a
+                    >
+                </li>
+            </ul>
 
+            {% endif %}
+        </div>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             {% if user.is_authenticated %}
             <ul class="navbar-nav ml-auto">
