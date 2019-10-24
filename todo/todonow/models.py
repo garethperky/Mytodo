@@ -7,7 +7,7 @@ class Todo(models.Model):
     title = models.CharField(max_length=120)
     description = models.TextField()
     completed = models.BooleanField(default=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     value = models.IntegerField(null=False)
 
     def _str_(self):
