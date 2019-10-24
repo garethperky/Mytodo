@@ -22,7 +22,7 @@
                 height="140"
             />
             {% endif %}
-            <h2>Heading</h2>
+            <h2>{{ user.first_name }}</h2>
             <p>
                 Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod.
                 Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus,
@@ -30,7 +30,9 @@
                 magna.
             </p>
             <p>
-                <a class="btn btn-secondary" href="#" role="button">View details »</a>
+                <a class="btn btn-secondary" href="{% url 'List' %}" role="button"
+                    >View details »</a
+                >
             </p>
         </div>
         {% endfor %}

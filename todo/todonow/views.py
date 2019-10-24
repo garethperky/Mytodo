@@ -6,6 +6,7 @@ from .models import Todo
 from django.contrib.auth.models import User
 import math
 from .forms import TodoForm
+from django.views.generic import UpdateView, ListView
 
 def sum_total_values(user):
     values = Todo.objects.filter(
@@ -39,6 +40,17 @@ def todo_create_view(request):
     return render(request, 'create_todo.html', context={'form': form, 'users': users})
 
 @login_required
+def detail_view(UpdateView):
+    model = Todo
+    fields = ["user", 'title', 'description', 'value']
+
+@login_required
 def todo_group_view(request):
     users = User.objects.filter(groups__name='Kids')
     return render(request, 'overall.html', context = {'users': users})
+
+@login_required
+def todo_individual_view(request):
+    users = User.objects.filter(groups__name='Kids')
+    todo = Todo.objects.filter(pk=request.pk)
+    return render(request, 'overall.html', context = {'users': users, 'todo': todo})
