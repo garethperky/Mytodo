@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from .models import Todo
 from django.contrib.auth.models import User
 import math
+from .forms import TodoForm
 
 def sum_total_values(user):
     values = Todo.objects.filter(
@@ -26,3 +27,18 @@ def index(request):
 def profile(request):
     args = {'user': request.user}
     return render(request, 'home.html', context={'user': args})
+
+
+@login_required
+def todo_create_view(request):
+    users = User.objects.filter(groups__name='Kids')
+    form = TodoForm(request.POST)
+    if form.is_valid():
+        form.save()
+
+    return render(request, 'create_todo.html', context={'form': form, 'users': users})
+
+@login_required
+def todo_group_view(request):
+    users = User.objects.filter(groups__name='Kids')
+    return render(request, 'overall.html', context = {'users': users})

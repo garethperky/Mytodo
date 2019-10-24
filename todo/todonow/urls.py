@@ -8,4 +8,6 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('create/', views.todo_create_view, name="create"),
+    path('overall/', views.todo_group_view, name="overall")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
