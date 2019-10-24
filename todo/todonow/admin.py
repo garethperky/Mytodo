@@ -4,7 +4,7 @@ from .models import Todo, UserProfile
 
 
 class TodoAdmin(admin.ModelAdmin):
-      list_display = ('title', 'description', 'completed')
+      list_display = ('user', 'title', 'description', 'completed')
 
 class User_Profile(admin.ModelAdmin):
       list_display = ('user', 'image')
