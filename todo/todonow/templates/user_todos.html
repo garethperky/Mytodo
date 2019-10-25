@@ -1,0 +1,12 @@
+{% extends 'base.html' %} {% block content %} {% if request.user.is_staff %}
+<div class="progress" style="margin-bottom: 2em;">
+    <div
+        class="progress-bar progress-bar-striped progress-bar-animated"
+        role="progressbar"
+        aria-valuenow="{{ percentage }}"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        style="width:{{ percentage }}%"
+    ></div>
+</div>
+{% endif %} {% endblock %}

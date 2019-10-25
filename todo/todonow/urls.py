@@ -9,7 +9,9 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('create/', views.todo_create_view, name="create"),
-    path('overall/', views.todo_group_view, name="overall"),
     path('<int:pk>/', views.UpdateView.as_view(), name="update"),
     path('list/', views.ListView.as_view(), name="List"),
+    path('details/<int:pk>/', views.todo_detail, name='todo_detail'),
+    path('post/<int:pk>/', views.user_todos, name='user_todos'),
+    path('admin_homepage/', views.admin_view, name='admin_homepage'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
