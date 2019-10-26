@@ -25,10 +25,9 @@ def index(request):
         todo = Todo.objects.filter(user=request.user)
         net_value = sum_total_values(request.user)
         percentage = round(net_value * 100)
-        users = User.objects.filter(groups__name='Kids')
         if percentage > 100:
             percentage = 100
-    return render(request, 'home.html', context={'todos': todo, "percentage": percentage, 'users': users})
+    return render(request, 'app/home.html', context={'todos': todo, "percentage": percentage})
 
 @staff_member_required(login_url='index')
 def admin_view(request):
@@ -38,7 +37,7 @@ def admin_view(request):
     users = User.objects.filter(groups__name='Kids')
     if percentage > 100:
         percentage = 100
-    return render(request, 'admin_homepage.html', context={'todos': todo, "percentage": percentage, 'users': users})
+    return render(request, 'app/admin_homepage.html', context={'todos': todo, "percentage": percentage, 'users': users})
 
 @login_required
 def profile(request):
