@@ -10,14 +10,14 @@ class Todo(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     value = models.IntegerField(null=False)
 
-    def _str_(self):
+    def __str__(self):
         return self.title
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='profile_image', blank=True)
 
-    def _str_(self):
+    def __str__(self):
         return self.user.first_name
 
 def create_profile(sender, **kwargs):
