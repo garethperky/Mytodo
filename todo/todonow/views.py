@@ -43,7 +43,7 @@ def admin_view(request):
 @login_required
 def profile(request):
     args = {'user': request.user}
-    return render(request, 'home.html', context={'user': args})
+    return render(request, 'app/home.html', context={'user': args})
 
 @staff_member_required(login_url='index')
 def todo_create_view(request):
@@ -52,11 +52,11 @@ def todo_create_view(request):
     if form.is_valid():
         post = form.save(commit=False)
         post.save()
-        return redirect('todo_detail', pk=post.pk)
+        return redirect('app/todo_detail', pk=post.pk)
     else:
         form = TodoForm()
 
-    return render(request, 'create_todo.html', context={'form': form, 'users': users})
+    return render(request, 'app/create_todo.html', context={'form': form, 'users': users})
 
 @login_required
 def detail_view(UpdateView):
@@ -65,7 +65,7 @@ def detail_view(UpdateView):
 
 def todo_detail(request, pk):
     todo = get_object_or_404(Todo, pk=pk)
-    return render(request, 'todo_detail.html', {'todo': todo})
+    return render(request, 'app/todo_detail.html', {'todo': todo})
 
 @staff_member_required(login_url='index')
 def user_todos(request, pk):
@@ -73,7 +73,7 @@ def user_todos(request, pk):
     net_value = sum_total_values(user=pk)
     percentage = round(net_value * 100)
     user = User.objects.get(pk=pk)
-    return render(request, 'user_todos.html', {'user': user, 'todos': todo, 'percentage': percentage})
+    return render(request, 'app/user_todos.html', {'user': user, 'todos': todo, 'percentage': percentage})
 
 @login_required
 def profile_page(request):
@@ -83,4 +83,4 @@ def profile_page(request):
         form = ImageUploadForm(request.POST, request.FILES, instance=request.user.userprofile)
         if form.is_valid():
             form.save()
-    return render(request, 'profile.html', context={'form': form})
+    return render(request, 'app/profile.html', context={'form': form})
