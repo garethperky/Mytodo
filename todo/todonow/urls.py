@@ -14,4 +14,6 @@ urlpatterns = [
     path('details/<int:pk>/', views.todo_detail, name='todo_detail'),
     path('post/<int:pk>/', views.user_todos, name='user_todos'),
     path('admin_homepage/', views.admin_view, name='admin_homepage'),
+    path('profile/', views.profile_page, name='profile'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,10 +1,10 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .models import Todo
+from .models import Todo, UserProfile
 from django.contrib.auth.models import User
 import math
-from .forms import TodoForm
+from .forms import TodoForm, ImageUploadForm
 from django.views.generic import UpdateView, ListView
 from django.shortcuts import render, get_object_or_404
 from django.contrib.admin.views.decorators import staff_member_required
@@ -72,4 +72,15 @@ def user_todos(request, pk):
     todo = Todo.objects.filter(user=pk)
     net_value = sum_total_values(user=pk)
     percentage = round(net_value * 100)
-    return render(request, 'user_todos.html', {'todo': todo, 'percentage': percentage})
+    user = User.objects.get(pk=pk)
+    return render(request, 'user_todos.html', {'user': user, 'todos': todo, 'percentage': percentage})
+
+@login_required
+def profile_page(request):
+    form_class = ImageUploadForm
+    form = form_class(request.POST or None)
+    if request.method == 'POST':
+        form = ImageUploadForm(request.POST, request.FILES, instance=request.user.userprofile)
+        if form.is_valid():
+            form.save()
+    return render(request, 'profile.html', context={'form': form})
