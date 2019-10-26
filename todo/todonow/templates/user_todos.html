@@ -1,4 +1,18 @@
 {% extends 'base.html' %} {% block content %} {% if request.user.is_staff %}
+<h3 align="center">
+    {{ user.first_name }} has completed {{ percentage }}% of his weekly tasks
+</h3>
+<br />
+<div class="text-center">
+    <img
+        class="circular--square"
+        src="{{ user.userprofile.image.url }}"
+        class="bd-placeholder-img rounded-circle"
+        width="240"
+        height="240"
+    />
+</div>
+<br />
 <div class="progress" style="margin-bottom: 2em;">
     <div
         class="progress-bar progress-bar-striped progress-bar-animated"
@@ -9,4 +23,32 @@
         style="width:{{ percentage }}%"
     ></div>
 </div>
+<table class="table table-hover" data-link="row">
+    <thead>
+        <tr align="center">
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Completed</th>
+            {% if request.user.is_staff %}
+            <th scope="col">delete</th></th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for todo in todos %}
+        <tr table-primary align="center">
+            <td>{{ todo.title }}</td>
+            <td>{{ todo.description }}</td>
+            {% if todo.completed %}
+            <td><a class="btn btn-success" href="{% url 'todo_detail' pk=todo.pk %}"><i class="fal fa-check-square"></i></a></td>
+            {% else %}
+            <td><a class="btn btn-danger" href="{% url 'todo_detail' pk=todo.pk %}"><i class="fal fa-times-square"></i></a></td>
+            {% endif %}
+            {% if request.user.is_staff %}
+            <td class="align-middle"><a class="btn btn-danger delete" href="{% url 'todo_detail' pk=todo.pk %}"><i class="fal fa-trash-alt"></i></a></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endif %} {% endblock %}
