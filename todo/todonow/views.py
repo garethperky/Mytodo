@@ -11,11 +11,14 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import redirect
 
 def sum_total_values(user):
-    values = Todo.objects.filter(
+    completed_values = Todo.objects.filter(
         user=user
-    ).filter(completed = True)
-    total_values = sum([entry.value for entry in values]) / 100
-    return total_values
+    ).filter(completed=True).count()
+    total_values = Todo.objects.filter(
+        user=user
+    )
+    divided_values = completed_values / total_values.count()
+    return divided_values
 
 @login_required
 def index(request):
