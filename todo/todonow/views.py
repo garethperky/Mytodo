@@ -51,7 +51,7 @@ def todo_create_view(request):
     if form.is_valid():
         post = form.save(commit=False)
         post.save()
-        return redirect('app/todo_detail', pk=post.pk)
+        return redirect('todo_detail', pk=post.pk)
     else:
         form = TodoForm()
 
@@ -83,3 +83,11 @@ def profile_page(request):
         if form.is_valid():
             form.save()
     return render(request, 'app/profile.html', context={'form': form})
+
+def delete_todo(request, pk):
+    todo = get_object_or_404(Todo, pk=pk)
+    if request.method == 'POST':
+        next = request.POST.get('next', '/')
+        todo.delete()
+        return redirect(next)
+    return render(request, 'app/profile.html')

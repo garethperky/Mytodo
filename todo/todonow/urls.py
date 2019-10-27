@@ -12,8 +12,9 @@ urlpatterns = [
     path('<int:pk>/', views.UpdateView.as_view(), name="update"),
     path('list/', views.ListView.as_view(), name="List"),
     path('details/<int:pk>/', views.todo_detail, name='todo_detail'),
-    path('post/<int:pk>/', views.user_todos, name='user_todos'),
+    path('usertodos/<int:pk>/', views.user_todos, name='user_todos'),
     path('admin_homepage/', views.admin_view, name='admin_homepage'),
     path('profile/', views.profile_page, name='profile'),
+    path('delete/<int:pk>/', views.delete_todo, name='delete')
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
