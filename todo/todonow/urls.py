@@ -15,6 +15,7 @@ urlpatterns = [
     path('usertodos/<int:pk>/', views.user_todos, name='user_todos'),
     path('admin_homepage/', views.admin_view, name='admin_homepage'),
     path('profile/', views.profile_page, name='profile'),
-    path('delete/<int:pk>/', views.delete_todo, name='delete')
+    path('delete/<int:pk>/', views.delete_todo, name='delete'),
+    path('update_complate/<int:pk>/', views.update_completed_status, name='updatecomplete')
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

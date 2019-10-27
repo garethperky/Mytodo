@@ -91,3 +91,11 @@ def delete_todo(request, pk):
         todo.delete()
         return redirect(next)
     return render(request, 'app/profile.html')
+
+def update_completed_status(request, pk):
+    todo = get_object_or_404(Todo, pk=pk)
+    if request.method == 'POST':
+        todo.completed = not todo.completed
+        next = request.POST.get('next', '/')
+        todo.save()
+        return redirect(next)
