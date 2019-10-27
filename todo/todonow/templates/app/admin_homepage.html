@@ -7,7 +7,7 @@
     </p>
 </div>
 
-<div class="container marketing">
+<div align="center">
     <!-- Three columns of text below the carousel -->
     <div class="row">
         {% for user in users %}
@@ -22,28 +22,12 @@
             />
             {% endif %}
             <h2>{{ user.first_name }}</h2>
-            <div class="progress" style="margin-bottom: 2em;">
-                <div
-                    class="progress-bar progress-bar-striped progress-bar-animated"
-                    role="progressbar"
-                    aria-valuenow="{{ percentage }}"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                    style="width:{{ percentage }}%"
-                ></div>
-            </div>
-            <p>
-                Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod.
-                Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus,
-                porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus
-                magna.
-            </p>
             <p>
                 <a
                     class="btn btn-secondary"
                     href="{% url 'user_todos' pk=user.pk %}"
                     role="button"
-                    >View details »</a
+                    >View Chores »</a
                 >
             </p>
         </div>
