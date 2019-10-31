@@ -30,15 +30,13 @@ class Todo(models.Model):
     def get_absolute_url(self):
         return reverse('todo_detail', kwargs={'pk': self.pk})
 
-
-
-
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='profile_image', blank=True)
 
     def __str__(self):
         return self.user.first_name
+
 
 def create_profile(sender, **kwargs):
     if kwargs['created']:

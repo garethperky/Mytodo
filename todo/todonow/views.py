@@ -13,6 +13,21 @@ from django.http import HttpResponse, Http404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 
+from django.db.models.signals import post_init, post_save
+from django.dispatch import receiver
+
+
+@receiver(post_init, sender= UserProfile)
+def backup_image_path(sender, instance, **kwargs):
+    instance._current_imagen_file = instance.image
+
+
+@receiver(post_save, sender= UserProfile)
+def delete_old_image(sender, instance, **kwargs):
+    if hasattr(instance, '_current_imagen_file'):
+        if instance._current_imagen_file != instance.image.path:
+            instance._current_imagen_file.delete(save=False)
+
 def sum_total_values(user):
     completed_values = Todo.objects.filter(
         user=user
