@@ -9,6 +9,9 @@ from django.views.generic import UpdateView, ListView
 from django.shortcuts import render, get_object_or_404
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import redirect
+from django.http import HttpResponse, Http404
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib import messages
 
 def sum_total_values(user):
     completed_values = Todo.objects.filter(
@@ -60,14 +63,26 @@ def todo_create_view(request):
 
     return render(request, 'app/create_todo.html', context={'form': form, 'users': users})
 
-@login_required
-def detail_view(UpdateView):
+class update_todo_view(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    template_name = 'app/todo_form.html'
     model = Todo
     fields = ["user", 'title', 'description', 'value']
 
+    def form_isvalid(self, form):
+        form.instance.pk = self.request.user
+        return super().form_isvalid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user.is_staff:
+            return True
+        return False
+
 def todo_detail(request, pk):
     todo = get_object_or_404(Todo, pk=pk)
-    return render(request, 'app/todo_detail.html', {'todo': todo})
+    if request.user == todo.user:
+        return render(request, 'app/todo_detail.html', {'todo': todo})
+    else: raise Http404("Entry not found")
 
 @staff_member_required(login_url='index')
 def user_todos(request, pk):
