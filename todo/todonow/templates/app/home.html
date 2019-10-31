@@ -1,7 +1,16 @@
 {% extends 'core/base.html' %} {% load static %} {% block title %}Home{% endblock %} {% block content %}
 {% if user.is_authenticated %}
 
-
+{% if messages %}
+ {% for message in messages %}
+  <div class="alert alert-success" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  {{ message }}
+</div>
+{% endfor %}
+{% endif %}
 {% if user.userprofile.image %}
 <div class="text-center">
 

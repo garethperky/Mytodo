@@ -100,6 +100,8 @@ def profile_page(request):
         form = ImageUploadForm(request.POST, request.FILES, instance=request.user.userprofile)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Profile picture uploaded successfully')
+            return redirect('index')
     return render(request, 'app/profile.html', context={'form': form})
 
 def delete_todo(request, pk):
