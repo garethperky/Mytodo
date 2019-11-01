@@ -52,6 +52,9 @@ def get_secret(secret_name):
 
 _SECRET = get_secret("mytestsite-secrets")
 
+PUSH_OVER_APP_TOKEN = _SECRET["PUSH_OVER_APP_TOKEN"]
+PUSH_OVER_USER_TOKEN = _SECRET["PUSH_OVER_USER_TOKEN"]
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 

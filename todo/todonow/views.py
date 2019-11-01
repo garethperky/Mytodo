@@ -15,6 +15,8 @@ from django.contrib import messages
 
 from django.db.models.signals import post_init, post_save
 from django.dispatch import receiver
+from django.conf import settings
+import requests
 
 
 @receiver(post_init, sender= UserProfile)
@@ -37,6 +39,12 @@ def sum_total_values(user):
     )
     divided_values = completed_values / total_values.count()
     return divided_values
+
+def pushover_handler(user, todo):
+    myMessage= user +' has completed the task ' + todo
+    url = "https://api.pushover.net/1/messages.json"
+    querystring = {"token":settings.PUSH_OVER_APP_TOKEN,"user":settings.PUSH_OVER_USER_TOKEN,"message":myMessage}
+    response = requests.request("POST", url, params=querystring)
 
 @login_required
 def index(request):
@@ -129,8 +137,11 @@ def delete_todo(request, pk):
 
 def update_completed_status(request, pk):
     todo = get_object_or_404(Todo, pk=pk)
+    user = request.user
     if request.method == 'POST':
         todo.completed = not todo.completed
+        if todo.completed == True and user.groups.filter(name = "Kids").exists():
+            pushover_handler(user.first_name, todo.title)
         next = request.POST.get('next', '/')
         todo.save()
         return redirect(next)
