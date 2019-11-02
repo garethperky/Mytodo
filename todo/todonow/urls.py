@@ -8,13 +8,13 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('create/', views.todo_create_view, name="create"),
-    path('details/<int:pk>/', views.todo_detail, name='todo_detail'),
-    path('update/<int:pk>/update/', views.update_todo_view.as_view(), name='todo_detail'),
-    path('usertodos/<int:pk>/', views.user_todos, name='user_todos'),
     path('admin_homepage/', views.admin_view, name='admin_homepage'),
-    path('profile/', views.profile_page, name='profile'),
+    path('create/', views.todo_create_view, name="create"),
     path('delete/<int:pk>/', views.delete_todo, name='delete'),
+    path('details/<int:pk>/', views.todo_detail, name='details'),
+    path('profile/', views.profile_page, name='profile'),
     path('update_complete/<int:pk>/', views.update_completed_status, name='updatecomplete'),
+    path('update/<int:pk>/update/', views.update_todo_view.as_view(), name='update'),
+    path('usertodos/<int:pk>/', views.user_todos, name='user_todos'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
