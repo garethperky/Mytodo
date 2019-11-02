@@ -34,9 +34,10 @@
             {% endif %}
         </tr>
     </thead>
+    {% for todo in todos %}
     <tbody>
-        {% for todo in todos %}
-        <tr  table-primary align="center"  onclick="openInNewTab('www.test.com');">
+
+        <tr  table-primary align="center" >
             <td>{{ todo.title }}</td>
             <td>{{ todo.description }}</td>
             {% if todo.completed %}
@@ -72,7 +73,4 @@
         {% endfor %}
     </tbody>
 </table>
-<script> function openInNewTab(url) {
-  location.replace("https://www.w3schools.com")
-}</script>
 {% endif %} {% endblock %}
