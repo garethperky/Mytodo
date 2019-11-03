@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.urls import reverse
+from django.utils import timezone
 
 VALUE_CHOICES = (
     (1, 1),
@@ -23,6 +24,7 @@ class Todo(models.Model):
     completed = models.BooleanField(default=False)
     user = models.ForeignKey(User, limit_choices_to={'groups__name': "Kids"}, on_delete=models.CASCADE)
     value = models.IntegerField(null=False, choices=VALUE_CHOICES)
+    due = models.DateField(default=timezone.now().strftime("%d-%m-%Y"))
 
     def __str__(self):
         return self.title

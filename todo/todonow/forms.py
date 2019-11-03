@@ -4,7 +4,7 @@ from .models import Todo, UserProfile
 class TodoForm(forms.ModelForm):
     class Meta:
         model = Todo
-        fields = ["user", 'title', 'description', 'value']
+        fields = ["user", 'title', 'due', 'description', 'value']
 
 class ImageUploadForm(forms.ModelForm):
     class Meta:
