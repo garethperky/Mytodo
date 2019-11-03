@@ -27,7 +27,7 @@ def backup_image_path(sender, instance, **kwargs):
 @receiver(post_save, sender= UserProfile)
 def delete_old_image(sender, instance, **kwargs):
     if hasattr(instance, '_current_imagen_file'):
-        if instance._current_imagen_file != instance.image.path:
+        if instance._current_imagen_file != instance.image:
             instance._current_imagen_file.delete(save=False)
 
 def sum_total_values(user):

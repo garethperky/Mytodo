@@ -64,7 +64,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = _SECRET["SECRET_KEY"]
-
+AWS_ACCESS_KEY_ID = _SECRET["AWS_ACCESS_KEY_ID"]
+AWS_SECRET_ACCESS_KEY = _SECRET["S3_SECRET_ACCESS_KEY"]
+AWS_STORAGE_BUCKET_NAME = _SECRET["AWS_STORAGE_BUCKET_NAME"]
+AWS_S3_CUSTOM_DOMAIN = "%s.s3.amazonaws.com" % AWS_STORAGE_BUCKET_NAME
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -76,6 +79,7 @@ ALLOWED_HOSTS = ["127.0.0.1", "3.8.174.79"]
 INSTALLED_APPS = [
     "todonow",
     'bootstrap4',
+    "storages",
     'crispy_forms',
     "django.contrib.admin",
     "django.contrib.auth",
@@ -166,4 +170,4 @@ STATIC_URL = "/static/"
 LOGIN_REDIRECT_URL = reverse_lazy("index")
 LOGOUT_REDIRECT_URL = reverse_lazy("index")
 MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, 'todonow/media')
+DEFAULT_FILE_STORAGE = 'todo.storage_backends.MediaStorage'
