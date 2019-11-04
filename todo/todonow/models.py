@@ -24,13 +24,13 @@ class Todo(models.Model):
     completed = models.BooleanField(default=False)
     user = models.ForeignKey(User, limit_choices_to={'groups__name': "Kids"}, on_delete=models.CASCADE)
     value = models.IntegerField(null=False, choices=VALUE_CHOICES)
-    due = models.DateField(default=timezone.now().strftime("%d-%m-%Y"))
+    due_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('todo_detail', kwargs={'pk': self.pk})
+        return reverse('details', kwargs={'pk': self.pk})
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
