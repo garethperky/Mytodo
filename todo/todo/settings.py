@@ -80,6 +80,7 @@ INSTALLED_APPS = [
     "todonow",
     'bootstrap4',
     "storages",
+    "tempus_dominus",
     'crispy_forms',
     "django.contrib.admin",
     "django.contrib.auth",

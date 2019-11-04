@@ -1,4 +1,4 @@
-{% extends 'core/base.html' %} {% load crispy_forms_tags %} {% block content %}
+{% extends 'core/base.html' %} {% block content %} {% load crispy_forms_tags %}
 
 <div class="jumbotron">
     <h3>Hello {{ user.first_name }} you can add tasks here</h3>
@@ -7,10 +7,12 @@
     </p>
 </div>
 
-<form method="post" novalidate>
+<form method="POST">
     {% csrf_token %}
     {{ form | crispy }}
-    <button type="submit" class="btn btn-success">Save Todo</button>
+    <div style="float: right;">
+        <button type="submit" class="btn btn-success">Save Todo</button>
+    </div>
 </form>
 
-{% endblock %}
+{% endblock %} {% block script %} {{ form.media }} {% endblock script %}
