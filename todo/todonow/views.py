@@ -37,8 +37,12 @@ def sum_total_values(user):
     total_values = Todo.objects.filter(
         user=user
     )
-    divided_values = completed_values / total_values.count()
-    return divided_values
+    no_values = 0
+    if completed_values:
+        divided_values = completed_values / total_values.count()
+        return divided_values
+    else:
+        return no_values
 
 def pushover_handler(user, todo):
     myMessage= user +' has completed the task ' + todo
@@ -80,7 +84,7 @@ def todo_create_view(request):
     if form.is_valid():
         post = form.save(commit=False)
         post.save()
-        return redirect('todo_detail', pk=post.pk)
+        return redirect('details', pk=post.pk)
     else:
         form = TodoForm()
 
