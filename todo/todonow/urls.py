@@ -14,7 +14,7 @@ urlpatterns = [
     path('details/<int:pk>/', views.todo_detail, name='details'),
     path('profile/', views.profile_page, name='profile'),
     path('update_complete/<int:pk>/', views.update_completed_status, name='updatecomplete'),
-    path('update/<int:pk>/update/', views.update_todo_view.as_view(), name='update'),
+    path('update/<int:pk>/', views.update_todo_view.as_view(), name='update'),
     path('usertodos/<int:pk>/', views.user_todos, name='user_todos'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
