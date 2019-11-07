@@ -81,6 +81,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     "storages",
     "tempus_dominus",
+     'django_extensions',
     'crispy_forms',
     "django.contrib.admin",
     "django.contrib.auth",
