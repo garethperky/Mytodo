@@ -1,8 +1,19 @@
 {% extends 'core/base.html' %} {% block content %} {% if request.user.is_staff %}
+{% if messages %}
+ {% for message in messages %}
+  <div class="alert alert-success" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  {{ message }}
+</div>
+{% endfor %}
+{% endif %}
 <h3 align="center">
     {{ user.first_name }} has completed {{ percentage }}% of his weekly tasks
 </h3>
 <br />
+{% if user.userprofile.image %}
 <div class="text-center">
     <img
         class="circular--square"

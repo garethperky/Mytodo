@@ -82,9 +82,11 @@ def todo_create_view(request):
     users = User.objects.filter(groups__name='Kids')
     form = TodoForm(request.POST)
     if form.is_valid():
+        post = form.cleaned_data
         post = form.save(commit=False)
         post.save()
-        return redirect('details', pk=post.pk)
+        messages.info(request, "Todo added successfully")
+        return redirect('user_todos', pk=post.user.id)
     else:
         form = TodoForm()
 
