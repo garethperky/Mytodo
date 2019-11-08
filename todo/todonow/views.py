@@ -134,12 +134,11 @@ def profile_page(request):
     return render(request, 'app/profile.html', context={'form': form})
 
 def delete_todo(request, pk):
-    todo = get_object_or_404(Todo, pk=pk)
-    if request.method == 'POST':
-        next = request.POST.get('next', '/')
-        todo.delete()
-        return redirect(next)
-    return render(request, 'app/profile.html')
+    instance = get_object_or_404(Todo, pk=pk)
+    next = request.POST.get('next', '/')
+    instance.delete()
+    messages.info(request, "Todo deleted successfully")
+    return redirect('user_todos', pk=instance.user.id)
 
 def update_completed_status(request, pk):
     todo = get_object_or_404(Todo, pk=pk)
