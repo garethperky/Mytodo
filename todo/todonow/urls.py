@@ -2,6 +2,7 @@ from django.urls import path, include
 from django.views.generic.base import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls.static import static
 
 from . import views
 
@@ -17,4 +18,4 @@ urlpatterns = [
     path('update/<int:pk>/', views.update_todo_view.as_view(), name='update'),
     path('usertodos/<int:pk>/', views.user_todos, name='user_todos'),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
