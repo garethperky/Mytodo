@@ -73,6 +73,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["127.0.0.1", "3.8.174.79"]
 
+DATE_INPUT_FORMATS = "%m/%d/%Y"
 
 # Application definition
 
@@ -81,7 +82,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     "storages",
     "tempus_dominus",
-     'django_extensions',
+    'django_extensions',
     'crispy_forms',
     "django.contrib.admin",
     "django.contrib.auth",
@@ -154,9 +155,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "en-GB"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Europe/London"
 
 USE_I18N = True
 
@@ -173,3 +174,4 @@ LOGIN_REDIRECT_URL = reverse_lazy("index")
 LOGOUT_REDIRECT_URL = reverse_lazy("index")
 MEDIA_URL = "/media/"
 DEFAULT_FILE_STORAGE = 'todo.storage_backends.MediaStorage'
+STATIC_ROOT = os.path.join(BASE_DIR, "static_generated")
