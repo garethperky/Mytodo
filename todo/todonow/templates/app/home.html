@@ -20,17 +20,17 @@
                 >
 
 </div>
-
+<br>
 {% endif %}
 {% if todos %}
-<h3>Hello {{ user.first_name }} you have completed {{ percentage }}% of your weekly tasks</h3>
+<h3 align="center">Hello {{ user.first_name }} you have completed {{ percentage }}% of your weekly tasks</h3>
 <div class="progress" style="margin-bottom: 2em;">
         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
           aria-valuenow="{{percentage}}" aria-valuemin="0" aria-valuemax="100" style="width:{{percentage}}%">
         </div>
 </div>
 {% else %}
-<h3>Hello {{ user.first_name }} you have no scheduled tasks</h3>
+<h3 align="center">Hello {{ user.first_name }} you have no scheduled tasks</h3>
 {% endif %}
 <br />
 
