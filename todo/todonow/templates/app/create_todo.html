@@ -1,4 +1,5 @@
-{% extends 'core/base.html' %} {% block content %} {% load crispy_forms_tags %}
+{% extends "core/base.html" %} {% load static from staticfiles %} {% load bootstrap4 %}
+{% block content %} {% load crispy_forms_tags %}
 
 <div class="jumbotron">
     <h3>Hello {{ user.first_name }} you can add tasks here</h3>
@@ -15,4 +16,8 @@
     </div>
 </form>
 
-{% endblock %} {% block script %} {{ form.media }} {% endblock script %}
+{% endblock %} {% block script %}<script
+    type="text/javascript"
+    src="{% static 'js/moment/locale/en-gb.js' %}"
+></script>
+{{ form.media }} {% endblock script %}
