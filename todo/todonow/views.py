@@ -115,11 +115,20 @@ def todo_detail(request, pk):
 
 @staff_member_required(login_url='index')
 def user_todos(request, pk):
+    form = TodoForm(request.POST)
     todo = Todo.objects.filter(user=pk)
     net_value = sum_total_values(user=pk)
     percentage = round(net_value * 100)
     user = User.objects.get(pk=pk)
-    return render(request, 'app/user_todos.html', {'user': user, 'todos': todo, 'percentage': percentage})
+    if form.is_valid():
+        post = form.cleaned_data
+        post = form.save(commit=False)
+        post.save()
+        messages.info(request, "Todo added successfully")
+        return redirect('user_todos', pk=post.user.id)
+    else:
+        form = TodoForm()
+    return render(request, 'app/user_todos.html', {'form': form, 'user': user, 'todos': todo, 'percentage': percentage})
 
 @login_required
 def profile_page(request):
