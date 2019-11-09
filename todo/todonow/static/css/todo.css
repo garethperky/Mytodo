@@ -1,3 +1,13 @@
 .circular--square {
     border-radius: 50%;
 }
+
+h3 {
+    color: #c25100;
+}
+.list-group {
+    flex-direction: row;
+}
+.bs-example {
+    margin: 20px;
+}
