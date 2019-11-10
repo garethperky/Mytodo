@@ -1,13 +1,19 @@
 .circular--square {
     border-radius: 50%;
 }
-
-h3 {
-    color: #c25100;
-}
 .list-group {
     flex-direction: row;
 }
-.bs-example {
-    margin: 20px;
+th {
+    background-color: #007bff;
+    color: white;
+}
+
+.table td,
+.table th {
+    border: none;
+}
+
+table.table.table-hover {
+    border: 0.5px solid #007bff;
 }
