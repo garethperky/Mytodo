@@ -51,7 +51,7 @@
 
                             <input type="hidden" name="next" value="{{ request.path }}">
                             <button name="update" type="submit" class="btn btn-success"><i
-                                    class="fal fa-check-square">  Approved</i>
+                                    class="fal fa-check-square">  Completed</i>
                             </button>
                         </div>
                     </form>
@@ -63,9 +63,8 @@
                         <div>
 
                             <input type="hidden" name="next" value="{{ request.path }}">
-                            <button name="update" type="submit" class="btn btn-warning"><i
-                                    class="fal fa-check-square">  Awaiting Approval</i>
-                            </button>
+                            <button name="update" type="submit" class="btn btn-warning"><i class="fad fa-exclamation"></i>
+                            Awaiting Approval</button>
                         </div>
                     </form>
                     </td>
@@ -78,7 +77,7 @@
                             <input type="hidden" name="next" value="{{ request.path }}">
                             <button name="update" type="submit" class="btn btn-danger"><i
                                     class="fal fa-times-square"></i>
-                            </button>
+                            Not Yet Completed</button>
                         </div>
                     </form>
                 </td>
@@ -90,6 +89,7 @@
           <i class="fal fa-trash-alt"></i>
         </a></td>
           <td>
+            {% if todo.completed %}
          <form class="flex-container" method="post" action="{% url 'approve' pk=todo.pk %}">
           {% csrf_token %}
           <div>
@@ -98,6 +98,7 @@
             </button>
           </div>
         </form>
+        {% endif %}
         </td>
       {% endif %}
     </tr>
