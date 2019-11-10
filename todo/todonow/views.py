@@ -33,7 +33,7 @@ def delete_old_image(sender, instance, **kwargs):
 def sum_total_values(user):
     completed_values = Todo.objects.filter(
         user=user
-    ).filter(completed=True).count()
+    ).filter(completed=True, confirm_complete=True).count()
     total_values = Todo.objects.filter(
         user=user
     )
