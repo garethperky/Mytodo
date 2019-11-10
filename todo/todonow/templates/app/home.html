@@ -52,18 +52,33 @@
             <tr table-primary align="center">
                 <td>{{ todo.title }}</td>
                 <td>{{ todo.description }}</td>
-                {% if todo.completed %}
+                {% if todo.completed and todo.confirm_complete %}
                 <td class="align-middle">
                     <form class="flex-container" method="post" action="{% url 'updatecomplete' pk=todo.pk %}">
                         {% csrf_token %}
                         <div>
+
                             <input type="hidden" name="next" value="{{ request.path }}">
                             <button name="update" type="submit" class="btn btn-success"><i
-                                    class="fal fa-check-square"></i>
+                                    class="fal fa-check-square">  Approved</i>
                             </button>
                         </div>
                     </form>
                 </td>
+                {% elif todo.completed %}
+                <td class="align-middle">
+                <form class="flex-container" method="post" action="{% url 'updatecomplete' pk=todo.pk %}">
+                        {% csrf_token %}
+                        <div>
+
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button name="update" type="submit" class="btn btn-warning"><i
+                                    class="fal fa-check-square">  Awaiting Approval</i>
+                            </button>
+                        </div>
+                    </form>
+                    </td>
+
                 {% else %}
                 <td class="align-middle">
                     <form class="flex-container" method="post" action="{% url 'updatecomplete' pk=todo.pk %}">

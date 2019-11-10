@@ -1,91 +1,115 @@
 {% extends 'core/base.html' %} {% block content %} {% load crispy_forms_tags %} {% if request.user.is_staff %}
 {% if messages %}
- {% for message in messages %}
-  <div class="alert alert-success" role="alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
+{% for message in messages %}
+<div class="alert alert-success" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
   {{ message }}
 </div>
 {% endfor %}
 {% endif %}
 <h3 align="center">
-    {{ user.first_name }} has completed {{ percentage }}% of his weekly tasks
+  {{ user.first_name }} has completed {{ percentage }}% of his weekly tasks
 </h3>
 <br />
 {% if user.userprofile.image %}
 <div class="text-center">
-    <img
-        class="circular--square"
-        src="{{ user.userprofile.image.url }}"
-        class="bd-placeholder-img rounded-circle"
-        width="240"
-        height="240"
-    />
+  <img class="circular--square" src="{{ user.userprofile.image.url }}" class="bd-placeholder-img rounded-circle"
+    width="240" height="240" />
 </div>
 {% endif %}
 <br />
 <div class="progress" style="margin-bottom: 2em;">
-    <div
-        class="progress-bar progress-bar-striped progress-bar-animated"
-        role="progressbar"
-        aria-valuenow="{{ percentage }}"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        style="width:{{ percentage }}%"
-    ></div>
+  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+    aria-valuenow="{{ percentage }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ percentage }}%"></div>
 </div>
 <table class="table table-hover" data-link="row">
-    <thead>
-        <tr align="center">
-            <th scope="col">Title</th>
-            <th scope="col">Description</th>
-            <th scope="col">Completed</th>
-            {% if request.user.is_staff %}
-            <th scope="col">delete</th></th>
-            {% endif %}
-        </tr>
-    </thead>
-    {% for todo in todos %}
-    <tbody>
+  <thead>
+    <tr align="center">
+      <th scope="col">Title</th>
+      <th scope="col">Description</th>
+      <th scope="col">Status</th>
+      <th>Details</th>
+      {% if request.user.is_staff %}
+      <th scope="col">Delete</th>
+      </th>
+      <th scope="col">Approve</th>
+      {% endif %}
+    </tr>
+  </thead>
+  {% for todo in todos %}
+  <tbody>
+    <tr table-primary align="center">
+      <td>{{ todo.title }}</td>
+      <td>{{ todo.description }}</td>
+      {% if todo.completed and todo.confirm_complete %}
+                <td class="align-middle">
+                    <form class="flex-container" method="post" action="{% url 'updatecomplete' pk=todo.pk %}">
+                        {% csrf_token %}
+                        <div>
 
-        <tr  table-primary align="center" >
-            <td>{{ todo.title }}</td>
-            <td>{{ todo.description }}</td>
-            {% if todo.completed %}
-            <td class="align-middle"><form class="flex-container" method="post" action="{% url 'updatecomplete' pk=todo.pk %}" >
-                        {% csrf_token %}
-                        <div>
-                             <input type="hidden" name="next" value="{{ request.path }}">
-                            <button name="update" type="submit" class="btn btn-success" ><i class="fal fa-check-square"></i>
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button name="update" type="submit" class="btn btn-success"><i
+                                    class="fal fa-check-square">  Approved</i>
                             </button>
                         </div>
-                    </form></td>
-            {% else %}
-            <td class="align-middle"><form class="flex-container" method="post" action="{% url 'updatecomplete' pk=todo.pk %}" >
+                    </form>
+                </td>
+                {% elif todo.completed %}
+    <td class="align-middle">
+                <form class="flex-container" method="post" action="{% url 'updatecomplete' pk=todo.pk %}">
                         {% csrf_token %}
                         <div>
-                             <input type="hidden" name="next" value="{{ request.path }}">
-                            <button name="update" type="submit" class="btn btn-danger" ><i class="fal fa-times-square"></i>
+
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button name="update" type="submit" class="btn btn-warning"><i
+                                    class="fal fa-check-square">  Awaiting Approval</i>
                             </button>
                         </div>
-                    </form></td>
-            {% endif %}
-            {% if request.user.is_staff %}
-            <td class="align-middle">   <a class="btn btn-danger delete" href="{% url 'delete' pk=todo.pk %}"
-                                data-confirm="Are you sure you want to delete this Todo?">
-                                <i class="fal fa-trash-alt"></i>
-                            </a></td>
-            {% endif %}
-        </tr>
-        {% endfor %}
-    </tbody>
+                    </form>
+                    </td>
+
+                {% else %}
+                    <td class="align-middle">
+                    <form class="flex-container" method="post" action="{% url 'updatecomplete' pk=todo.pk %}">
+                        {% csrf_token %}
+                        <div>
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button name="update" type="submit" class="btn btn-danger"><i
+                                    class="fal fa-times-square"></i>
+                            </button>
+                        </div>
+                    </form>
+                </td>
+      {% endif %}
+      <td><a class="btn btn-info" href="{% url 'details' pk=todo.pk %}">details</a></td>
+      {% if request.user.is_staff %}
+      <td class="align-middle"> <a class="btn btn-danger delete" href="{% url 'delete' pk=todo.pk %}"
+          data-confirm="Are you sure you want to delete this Todo?">
+          <i class="fal fa-trash-alt"></i>
+        </a></td>
+          <td>
+         <form class="flex-container" method="post" action="{% url 'approve' pk=todo.pk %}">
+          {% csrf_token %}
+          <div>
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <button name="update" type="submit" class="btn btn-primary">Approve
+            </button>
+          </div>
+        </form>
+        </td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
 </table>
 <hr>
 <button style="float: right;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#todomodal">
   Add Todo
 </button>
-{% endif %} <!-- Modal -->
+{% endif %}
+<!-- Modal -->
 <div class="modal fade" id="todomodal" tabindex="-1" role="dialog" aria-labelledby="todoModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -95,15 +119,15 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-         <div class="modal-body">
-          <form method="POST">
-           {% csrf_token %}
-            {{ form | crispy }}
-            <div style="float: right;">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-success">Save Todo</button>
-            </div>
-          </form>
+      <div class="modal-body">
+        <form method="POST">
+          {% csrf_token %}
+          {{ form | crispy }}
+          <div style="float: right;">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Save Todo</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -113,19 +137,18 @@
 {{ reminder_form.media }}
 <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
 <script>
-    // Confirm delete
-    var deleteLinks = document.querySelectorAll('.delete');
-    for (var i = 0; i < deleteLinks.length; i++) {
-        deleteLinks[i].addEventListener('click', function(event) {
-            event.preventDefault();
+  // Confirm delete
+  var deleteLinks = document.querySelectorAll('.delete');
+  for (var i = 0; i < deleteLinks.length; i++) {
+    deleteLinks[i].addEventListener('click', function (event) {
+      event.preventDefault();
 
-            var choice = confirm(this.getAttribute('data-confirm'));
+      var choice = confirm(this.getAttribute('data-confirm'));
 
-            if (choice) {
-            window.location.href = this.getAttribute('href');
-            }
-        });
-    }
-
+      if (choice) {
+        window.location.href = this.getAttribute('href');
+      }
+    });
+  }
 </script>
 {% endblock script %}
