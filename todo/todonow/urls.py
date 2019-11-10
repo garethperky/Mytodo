@@ -10,6 +10,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin_homepage/', views.admin_view, name='admin_homepage'),
+    path('approve_complete/<int:pk>/', views.approve_completed, name='approve'),
     path('create/', views.todo_create_view, name="create"),
     path('delete/<int:pk>/', views.delete_todo, name='delete'),
     path('details/<int:pk>/', views.todo_detail, name='details'),

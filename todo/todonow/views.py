@@ -159,3 +159,14 @@ def update_completed_status(request, pk):
         next = request.POST.get('next', '/')
         todo.save()
         return redirect(next)
+
+def approve_completed(request, pk):
+    todo = get_object_or_404(Todo, pk=pk)
+    user = request.user
+    if request.method == 'POST':
+        todo.confirm_complete = not todo.confirm_complete
+        if todo.completed == True and user.groups.filter(name = "Kids").exists():
+            pushover_handler(user.first_name, todo.title)
+        next = request.POST.get('next', '/')
+        todo.save()
+        return redirect(next)

@@ -25,6 +25,7 @@ class Todo(models.Model):
     user = models.ForeignKey(User, limit_choices_to={'groups__name': "Kids"}, on_delete=models.CASCADE)
     value = models.IntegerField(null=False, choices=VALUE_CHOICES)
     due_date = models.DateTimeField(null=True)
+    confirm_complete = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
