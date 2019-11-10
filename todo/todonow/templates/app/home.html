@@ -2,83 +2,91 @@
 {% if user.is_authenticated %}
 
 {% if messages %}
- {% for message in messages %}
-  <div class="alert alert-success" role="alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
+{% for message in messages %}
+<div class="alert alert-success" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
     </button>
-  {{ message }}
+    {{ message }}
 </div>
 {% endfor %}
 {% endif %}
 {% if user.userprofile.image %}
 <div class="text-center">
 
-<img class="circular--square" src="{{ user.userprofile.image.url }}" class="bd-placeholder-img rounded-circle"
-                width="240"
-                height="240"
-                >
+    <img class="circular--square" src="{{ user.userprofile.image.url }}" class="bd-placeholder-img rounded-circle"
+        width="240" height="240">
 
 </div>
 <br>
 {% endif %}
-{% if todos %}
-<h3 align="center">Hello {{ user.first_name }} you have completed {{ percentage }}% of your weekly tasks</h3>
-<div class="progress" style="margin-bottom: 2em;">
+
+    {% if todos %}
+    <h3 align="center">Hello {{ user.first_name }} you have completed {{ percentage }}% of your weekly tasks</h3>
+    <br>
+    <div class="progress" style="margin-bottom: 2em;">
         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-          aria-valuenow="{{percentage}}" aria-valuemin="0" aria-valuemax="100" style="width:{{percentage}}%">
+            aria-valuenow="{{percentage}}" aria-valuemin="0" aria-valuemax="100" style="width:{{percentage}}%">
         </div>
+    </div>
+    {% else %}
+    <h3 align="center">Hello {{ user.first_name }} you have no scheduled tasks</h3>
+    {% endif %}
+    <br />
+<div class="row justify-content-md-center">
+    <table class="table table-hover" data-link="row">
+        <thead>
+            <tr align="center">
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Status</th>
+                {% if request.user.is_staff %}
+                <th scope="col">delete</th>
+                </th>
+                {% endif %}
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for todo in todos %}
+            <tr table-primary align="center">
+                <td>{{ todo.title }}</td>
+                <td>{{ todo.description }}</td>
+                {% if todo.completed %}
+                <td class="align-middle">
+                    <form class="flex-container" method="post" action="{% url 'updatecomplete' pk=todo.pk %}">
+                        {% csrf_token %}
+                        <div>
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button name="update" type="submit" class="btn btn-success"><i
+                                    class="fal fa-check-square"></i>
+                            </button>
+                        </div>
+                    </form>
+                </td>
+                {% else %}
+                <td class="align-middle">
+                    <form class="flex-container" method="post" action="{% url 'updatecomplete' pk=todo.pk %}">
+                        {% csrf_token %}
+                        <div>
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button name="update" type="submit" class="btn btn-danger"><i
+                                    class="fal fa-times-square"></i>
+                            </button>
+                        </div>
+                    </form>
+                </td>
+                {% endif %}
+                <td><a class="btn btn-info" href="{% url 'details' pk=todo.pk %}">details</a></td>
+                {% if request.user.is_staff %}
+                <td class="align-middle"><a class="btn btn-danger delete" href="{% url 'delete' pk=todo.pk %}"><i
+                            class="fal fa-trash-alt"></i></a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
-{% else %}
-<h3 align="center">Hello {{ user.first_name }} you have no scheduled tasks</h3>
-{% endif %}
-<br />
-
-
-
-<table class="table table-hover" data-link="row">
-    <thead>
-        <tr align="center">
-            <th scope="col">Title</th>
-            <th scope="col">Description</th>
-            <th scope="col">Completed</th>
-            {% if request.user.is_staff %}
-            <th scope="col">delete</th></th>
-            {% endif %}
-        </tr>
-    </thead>
-    <tbody>
-        {% for todo in todos %}
-        <tr table-primary align="center">
-            <td>{{ todo.title }}</td>
-            <td>{{ todo.description }}</td>
-            {% if todo.completed %}
-            <td class="align-middle"><form class="flex-container" method="post" action="{% url 'updatecomplete' pk=todo.pk %}" >
-                        {% csrf_token %}
-                        <div>
-                             <input type="hidden" name="next" value="{{ request.path }}">
-                            <button name="update" type="submit" class="btn btn-success" ><i class="fal fa-check-square"></i>
-                            </button>
-                        </div>
-                    </form></td>
-            {% else %}
-            <td class="align-middle"><form class="flex-container" method="post" action="{% url 'updatecomplete' pk=todo.pk %}" >
-                        {% csrf_token %}
-                        <div>
-                             <input type="hidden" name="next" value="{{ request.path }}">
-                            <button name="update" type="submit" class="btn btn-danger" ><i class="fal fa-times-square"></i>
-                            </button>
-                        </div>
-                    </form></td>
-            {% endif %}
-            {% if request.user.is_staff %}
-            <td class="align-middle"><a class="btn btn-danger delete" href="{% url 'todo_detail' pk=todo.pk %}"><i class="fal fa-trash-alt"></i></a></td>
-            {% endif %}
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
 {% else %}
 <p>You are not logged in</p>
 <a href="{% url 'login' %}">login</a>
