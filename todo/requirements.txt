@@ -12,6 +12,9 @@ Click==7.0
 Django==2.2.13
 django-bootstrap4==1.0.1
 django-crispy-forms==1.7.2
+django-extensions==3.0.5
+django-storages==1.9.1
+django-tempus-dominus==5.1.2.13
 docutils==0.14
 entrypoints==0.3
 exponent-server-sdk==0.3.1
@@ -24,8 +27,8 @@ jmespath==0.9.4
 lazy-object-proxy==1.5.1
 mccabe==0.6.1
 pbr==5.2.0
-Pillow==6.2.0
-psycopg2-binary==2.8.2
+Pillow==7.2.0
+psycopg2-binary==2.8.5
 pycodestyle==2.6.0
 pyflakes==2.1.1
 pylint==2.3.1
@@ -36,11 +39,12 @@ requests==2.22.0
 rope==0.17.0
 s3transfer==0.2.0
 six==1.12.0
+smmap==3.0.4
 smmap2==3.0.1
 soupsieve==1.9.4
 sqlparse==0.3.1
 stevedore==1.30.1
 toml==0.10.0
-typed-ast==1.3.5
+typed-ast==1.4.1
 urllib3==1.24.3
 wrapt==1.12.1
