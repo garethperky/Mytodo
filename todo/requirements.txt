@@ -1,6 +1,6 @@
 appdirs==1.4.3
 astroid==2.2.5
-attrs==19.1.0
+attrs==19.3.0
 bandit==1.6.0
 beautifulsoup4==4.8.1
 black==19.10b0
