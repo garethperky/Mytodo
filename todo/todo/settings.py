@@ -71,7 +71,7 @@ AWS_S3_CUSTOM_DOMAIN = "%s.s3.amazonaws.com" % AWS_STORAGE_BUCKET_NAME
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "3.8.174.79"]
+ALLOWED_HOSTS = ["127.0.0.1", "3.8.143.185"]
 
 DATE_INPUT_FORMATS = "%m/%d/%Y"
 
