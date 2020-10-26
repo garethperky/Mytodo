@@ -18,7 +18,7 @@ django-tempus-dominus==5.1.2.13
 docutils==0.14
 entrypoints==0.3
 exponent-server-sdk==0.3.1
-flake8==3.7.7
+flake8==3.8.4
 gitdb2==2.0.5
 GitPython==3.1.11
 idna==2.10
