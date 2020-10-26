@@ -19,7 +19,7 @@ docutils==0.14
 entrypoints==0.3
 exponent-server-sdk==0.3.1
 flake8==3.8.4
-gitdb2==2.0.5
+gitdb2==4.0.2
 GitPython==3.1.11
 idna==2.10
 isort==5.4.2
