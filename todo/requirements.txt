@@ -21,7 +21,7 @@ exponent-server-sdk==0.3.1
 flake8==3.7.7
 gitdb2==2.0.5
 GitPython==3.1.11
-idna==2.8
+idna==2.10
 isort==5.4.2
 jmespath==0.9.4
 lazy-object-proxy==1.5.1
