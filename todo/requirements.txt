@@ -37,7 +37,7 @@ pytz==2019.1
 PyYAML==5.3.1
 requests==2.24.0
 rope==0.17.0
-s3transfer==0.2.0
+s3transfer==0.5.0
 six==1.15.0
 smmap==3.0.4
 smmap2==3.0.1
